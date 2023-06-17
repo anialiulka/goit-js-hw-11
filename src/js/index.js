@@ -42,7 +42,7 @@ function onFormSubmit(event) {
     if (page > 1) {
       loader.classList.remove('hidden');
     }
-    showTotal(total);
+    showTotal(totalHits);
   });
 }
 async function fetchImages(searchQuery) {
