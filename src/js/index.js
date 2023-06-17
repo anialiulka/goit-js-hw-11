@@ -18,6 +18,7 @@ form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(event) {
   event.preventDefault();
   gallery.innerHTML = '';
+  loader.classList.add('hidden');
 
   page = 1;
   imagesTaken = 0;
@@ -28,7 +29,7 @@ function onFormSubmit(event) {
 
   searchWord = searchQuery.value;
 
-  if (searchWord === '') {
+  if (searchWord.trim().length === 0) {
     return;
   } else {
     fetchImages(searchWord).then(({ totalHits, hits }) => {
