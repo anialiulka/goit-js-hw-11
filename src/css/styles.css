@@ -40,7 +40,7 @@ b {
   gap: 20px;
 }
 
-.submit {
+.btn {
   background-color: #ea4c89;
   border-radius: 8px;
   border-style: none;
@@ -61,8 +61,8 @@ b {
   cursor: pointer;
 }
 
-.submit:hover,
-.submit:focus {
+.btn:hover,
+.btn:focus {
   background-color: #f082ac;
 }
 
@@ -86,4 +86,19 @@ input {
   gap: 30px;
   margin-top: 40px;
   margin-bottom: 20px;
+}
+
+.load-more {
+  display: block;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
 }

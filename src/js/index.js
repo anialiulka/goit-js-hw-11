@@ -1,10 +1,9 @@
-// import { fetchImages } from './api';
+import { fetchImages, fetchMoreImages } from './api';
+import Notiflix from 'notiflix';
 
 const form = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
-const input = document.querySelector('input');
-
-const API_KEY = '37360238-906099131e02ce03408024f3e';
+const loader = document.querySelector('.load-more');
 
 form.addEventListener('submit', onFormSubmit);
 
@@ -15,29 +14,16 @@ function onFormSubmit(event) {
   } = event.currentTarget;
   console.log(searchQuery.value);
   fetchImages(searchQuery.value).then(({ total, hits }) => {
+    loader.classList.remove('hidden');
     console.log(hits);
-    renderGallery(hits);
+    if (hits.length === 0) {
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      return;
+    } else renderGallery(hits);
+    showTotal(total);
   });
-}
-
-function fetchImages(searchQuery) {
-  const searchParams = new URLSearchParams({
-    key: API_KEY,
-    q: `${searchQuery}`,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-  });
-  const url = `https://pixabay.com/api/?${searchParams}`;
-  console.log(searchParams.toString());
-  return fetch(url)
-    .then(response => {
-      console.log(response.json);
-      return response.json();
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    });
 }
 
 function renderGallery(pictures) {
@@ -80,4 +66,14 @@ download
     .join('');
 
   gallery.innerHTML = markup;
+}
+
+function showTotal(total) {
+  Notiflix.Notify.success(`Hooray! We found ${total} images.`);
+}
+
+loader.addEventListener('click', onLoaderClick);
+
+function onLoaderClick(event) {
+  fetchMoreImages();
 }
