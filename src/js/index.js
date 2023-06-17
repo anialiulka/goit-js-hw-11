@@ -42,6 +42,7 @@ function onFormSubmit(event) {
         return;
       } else imagesTaken += hits.length;
       renderGallery(hits);
+      scrollSmoothly();
 
       if (hits.length >= totalHits) {
         page = 0;
@@ -134,11 +135,23 @@ function loadMore(event) {
     imagesTaken += hits.length;
     page += 1;
     renderGallery(hits);
+    scrollSmoothly();
     if (imagesTaken >= totalHits) {
       loader.classList.add('hidden');
       Notiflix.Notify.failure(
         "We're sorry, but you've reached the end of search results."
       );
     }
+  });
+}
+
+function scrollSmoothly() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
   });
 }
